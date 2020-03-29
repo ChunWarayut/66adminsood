@@ -1,0 +1,27 @@
+.modal-content {
+  background-color: rgb(0, 0, 0);
+  border: 1px solid #FFFF00;
+}
+.modal-header, .modal-footer{
+  border: unset;
+  align-self: center;
+}
+.modal-title{
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+  letter-spacing: 1px;
+  text-shadow: 1px 7px 10px #000000;
+  text-align: center;
+}
+
+.modal-header .close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #ff0000;
+}
+.modal-body{
+  color: white;
+  font-weight: bold;
+}

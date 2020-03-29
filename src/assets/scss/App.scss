@@ -1,0 +1,36 @@
+.page{
+  min-height: 100vh+(100vh*20/100);
+  background-image: url(../img/livecasino.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding-bottom: 5%;
+  .card-title{
+    // font-family: 'Helvet';
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 1em;
+    letter-spacing: 1px;
+    text-shadow: 1px 7px 10px #000000;
+  }
+  @import "./bootstrap-switch.scss";
+  @import "./Style.scss";
+  .Navbar{
+    @import "./Navbar.scss";
+  }
+  .body-login{
+    @import "./Login.scss";
+    @import "./Register.scss";
+  }
+  .body-home{
+    @import "./Home.scss";
+  }
+  .body-member{
+    @import "./Member.scss";
+  }
+  .body-contact{
+    @import "./Login.scss";
+  }
+}
