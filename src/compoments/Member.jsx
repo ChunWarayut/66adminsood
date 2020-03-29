@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container,Table, Input, InputGroup, InputGroupAddon, InputGroupText, Pagination, PaginationItem, PaginationLink, Nav } from "reactstrap";
-import Switch from 'react-bootstrap-switch';
 import { FaSistrix, FaRegEdit } from 'react-icons/fa';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 export default function Member () {
   return (
     <div className="body-member mt-5">  
@@ -73,7 +73,7 @@ export default function Member () {
                 </button> 
                 </td>
                 <td>
-                  <Switch defaultValue={false} offColor="" onColor="" />
+                  <BootstrapSwitchButton checked={true} width="75" onlabel="Active" offlabel="Block" onstyle="outline-success" offstyle="outline-danger" size="sm"/>
                 </td>
             </tr>
             <tr>
