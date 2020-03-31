@@ -1,15 +1,14 @@
 import * as firebase from "firebase/app";
 import 'firebase/database'
-// import moment from "moment";
+import passwordHash from "password-hash"
+
 const firebaseConfig = {
-    apiKey: "AIzaSyBlkk53gLxanJvFT7SkvbFbxq153RdKxn4",
-    authDomain: "ufa66-bacara.firebaseapp.com",
-    databaseURL: "https://ufa66-bacara.firebaseio.com",
-    projectId: "ufa66-bacara",
-    storageBucket: "ufa66-bacara.appspot.com",
-    messagingSenderId: "1076989975643",
-    appId: "1:1076989975643:web:591c30f1e6b1496febf37e",
-    measurementId: "G-05C96YT0WP"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -17,6 +16,69 @@ const db = firebase.database();
 
 export const getUsers = () => {
     return db.ref('tb_user')
+};
+
+export const getUsersByKey = (key) => {
+    return db.ref('tb_user/' + key).once('value').then(e => {
+        return {
+            _key: e?.val()?._key,
+            username: e?.val()?.username,
+            password: e?.val()?.password,
+            firstname: e?.val()?.firstname,
+            lastname: e?.val()?.lastname,
+            tel: e?.val()?.tel,
+            line: e?.val()?.line,
+            code: e?.val()?.code,
+            point: e?.val()?.point,
+            role: e?.val()?.role,
+            status: e?.val()?.status
+        }
+    })
+};
+export const getUsersLogin = () => {
+    return db.ref('tb_user').orderByChild('username')
+};
+
+export const getUsersLoginList = () => {
+    return db.ref('tb_user').orderByChild('username')
+};
+
+export const addUsers = (username = '', password = '', firstname = '', lastname = '', tel = '', line = '', code = '') => {
+    let newKey = db.ref().child(`tb_user`).push().key;
+    let updates = {};
+    const list = {
+        "_key": newKey,
+        "username": username,
+        "password": passwordHash.generate(password),
+        "firstname": firstname,
+        "lastname": lastname,
+        "tel": tel,
+        "line": line,
+        "code": code,
+        "point": "0",
+        "role": "agent",
+        "status": "active"
+    }
+    updates[`/tb_user/` + newKey] = list;
+    return db.ref().update(updates)
+};
+export const updateUsers = (_key, username = '', password = '', firstname = '', lastname = '', tel = '', line = '', code = '', point = '', role = '', status = '') => {
+    let updates = {};
+    const list = {
+        "_key": _key,
+        "username": username,
+        "password": password,
+        "firstname": firstname,
+        "lastname": lastname,
+        "tel": tel,
+        "line": line,
+        "code": code,
+        "point": point,
+        "role": role,
+        "status": status
+    }
+    updates[`/tb_user/` + _key] = list;
+    return db.ref().update(updates)
 };
 
 // export const getUsersLogin = (user, pass) => {
@@ -73,26 +135,6 @@ export const getUsers = () => {
 //     updates[`/tb_check/${localStorage.getItem('login__key')}/` + e._key] = list;
 //     return db.ref().update(updates)
 // };
-
-export const addUsers = (username = '', password = '', firstname = '', lastname = '', tel = '', line = '', code = '', point='') => {
-    let newKey = db.ref().child(`tb_user`).push().key;
-    let updates = {};
-    const list = {
-        "_key": newKey,
-        "username": username,
-        "password": password,
-        "firstname": firstname,
-        "lastname": lastname,
-        "tel": tel,
-        "line": line,
-        "code": code,
-        "point": "0",
-        "role": "agent",
-        "status": "active"
-    }
-    updates[`/tb_user/` + newKey] = list;
-    return db.ref().update(updates)
-};
 
 
 // export const fetchIP = () => {

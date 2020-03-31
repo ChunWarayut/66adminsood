@@ -1,10 +1,10 @@
 import React from "react";
-import Navigation from "../compoments/Navigation";
+import Navigation from "../components/Navigation";
 import { Switch, Route } from "react-router-dom";
-import Member from "../compoments/Member"
-import Formula from "../compoments/Formula"
-import Home from "../compoments/Home"
-import Login from "../compoments/Login"
+import Member from "../components/Member"
+import Formula from "../components/Formula"
+import Home from "../components/Home"
+import Login from "../components/Login"
 export default function RouterNav() {
     return <Switch>
     <Route path="/login">

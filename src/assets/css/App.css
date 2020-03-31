@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=K2D&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Kanit&display=swap');
+
+* {
+  font-family: 'K2D'
+}
 .App {
   text-align: center;
 }

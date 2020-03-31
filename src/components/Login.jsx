@@ -23,11 +23,14 @@ import {
 } from "reactstrap";
 import { FaUserAlt, FaLock, FaHighlighter, FaPen, FaPhoneVolume, FaLine, FaBarcode } from 'react-icons/fa';
 import imgLogo from "../assets/img/logobrand66.png";
-import * as FirestoreService from '../services/RealtimeDatabase';
-import { useHistory } from "react-router-dom";
-import Swal from 'sweetalert2'
+// import { useHistory } from "react-router-dom";
+// import Swal from 'sweetalert2'
+import { onSubmitLogin } from "../functions/LoginFunction";
+import { checkUsers } from "../functions/RegisterFunction";
+import Swal from "sweetalert2";
+import { addUsers } from "../services/RealtimeDatabase";
 
-export default function Login () {
+export default function Login() {
   const { value: username, bind: bindUsername, reset: resetUsername } = useInput('');
   const { value: password, bind: bindPassword, reset: resetPassword } = useInput('');
   const { value: firstname, bind: bindFirstname, reset: resetFirstname } = useInput('');
@@ -35,43 +38,45 @@ export default function Login () {
   const { value: tel, bind: bindTel, reset: resetTel } = useInput('');
   const { value: line, bind: bindLine, reset: resetLine } = useInput('');
   const { value: code, bind: bindCode, reset: resetCode } = useInput('');
-  // const [loginUser, setLoginUser] = useState([]);
-const history = useHistory();
-  const login = () => {
-    sessionStorage.setItem('username', username)
-    // history.push('home')
-    FirestoreService.getUsers().on('value', e => {
-      let array = [];
-      e.forEach(element => {
-         array.push(element.val());
-      });
-      
-      if (array.find((loginuser)=> loginuser?.username === username.toString() && loginuser?.password.toString() === password.toString())) {
-        sessionStorage.setItem('user_login_db',JSON.stringify(array.find((loginuser)=> loginuser?.username === username.toString() && loginuser?.password.toString() === password.toString())))
-        history.push('home')
-      } else {
-        Swal.fire(
-          'มีบางอย่างผิดพลาด',
-          'username หรือ password',
-          'error'
-        )
-      }
-    })
-  }
+
   const register = () => {
-    FirestoreService.addUsers(username, password,firstname, lastname, tel, line, code)
-    resetUsername() 
-    resetPassword()
-    resetFirstname()
-    resetLastname()
-    resetTel()
-    resetLine()
-    resetCode()
+    if (username && password && firstname && lastname && tel && line && code) {
+      checkUsers(username)
+        .then(e => {
+          if (!e) {
+            addUsers(username, password, firstname, lastname, tel, line, code)
+            resetUsername()
+            resetPassword()
+            resetFirstname()
+            resetLastname()
+            resetTel()
+            resetLine()
+            resetCode()
+            Swal.fire(
+              'Register Success!',
+              'ลงทะเบียนสำเร็จ',
+              'success'
+            ).then(() => onSubmitLogin(username, password))
+          } else {
+            Swal.fire(
+              'Register False!',
+              'usersname / ชื่อผู้ใช้งาน นี้ถูกใช้งานแล้ว',
+              'warning'
+            )
+          }
+        })
+    } else {
+      Swal.fire(
+        'Register False!',
+        'กรุณากรอกข้อมูลให้ครบถ้วน',
+        'warning'
+      )
+    }
   }
-  
-    const [modal, setModal] = useState(false);
-  
-    const toggle = () => setModal(!modal);
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
 
   return (
     <div className="body-login">
@@ -90,7 +95,7 @@ const history = useHistory();
                   <InputGroup className="my-2 px-5">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <FaUserAlt/>
+                        <FaUserAlt />
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
@@ -102,7 +107,7 @@ const history = useHistory();
                   <InputGroup className="my-2 px-5">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <FaLock/>
+                        <FaLock />
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
@@ -114,7 +119,7 @@ const history = useHistory();
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-round mx-2" color="primary" size="lg" onClick={login} type="button" value="Submit">
+                <Button className="btn-round mx-2" color="primary" size="lg" onClick={() => onSubmitLogin(username, password)} type="button" value="Submit">
                   Login
                 </Button>
                 <Button className="btn-round mx-2" color="primary" size="lg" onClick={toggle} type="button" value="Submit">
@@ -127,13 +132,13 @@ const history = useHistory();
       </Container>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader className="login-register" toggle={toggle}>
-            Register
+          Register
         </ModalHeader>
         <ModalBody>
           <InputGroup className="my-2 px-5">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaUserAlt/>
+                <FaUserAlt />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -145,7 +150,7 @@ const history = useHistory();
           <InputGroup className="my-2 px-5">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaLock/>
+                <FaLock />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -157,7 +162,7 @@ const history = useHistory();
           <InputGroup className="my-2 px-5">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaHighlighter/>
+                <FaHighlighter />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -181,7 +186,7 @@ const history = useHistory();
           <InputGroup className="my-2 px-5">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaPhoneVolume/>
+                <FaPhoneVolume />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -193,7 +198,7 @@ const history = useHistory();
           <InputGroup className="my-2 px-5">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaLine/>
+                <FaLine />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -205,7 +210,7 @@ const history = useHistory();
           <InputGroup className="my-2 px-5">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
-                <FaBarcode/>
+                <FaBarcode />
               </InputGroupText>
             </InputGroupAddon>
             <Input
@@ -216,8 +221,8 @@ const history = useHistory();
           </InputGroup>
         </ModalBody>
         <ModalFooter className="text-center">
-            <Button color="primary" onClick={register}>Submit</Button>{' '}
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
+          <Button color="primary" onClick={register}>Submit</Button>{' '}
+          <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </div>
