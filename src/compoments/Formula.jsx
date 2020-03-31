@@ -21,7 +21,7 @@ export default function Formula () {
                             สูตรที่ 1
                         </h1>
                     </div>
-                    <div className="list-game">
+                    <div className="list-formula">
                         <Table dark >
                             <tbody>
                                 <tr >
@@ -103,7 +103,7 @@ export default function Formula () {
                         </Table>
                     </div>
                 </Col>
-                <Col  className="h-100 text-center" xs="4">
+                <Col  className="add-list h-100 text-center" xs="4">
                     <div  >
                         <h1>
                             เพิ่มสูตร
@@ -127,6 +127,31 @@ export default function Formula () {
                                 <CardImg src={Npoint} alt="Card image cap2" />
                             </Col>
                             <Col xs="4">
+                                <CardImg src={Npoint} alt="Card image cap2" />
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className="my-3">
+                        <Row>
+                            <Col xs="4">
+                                <CardImg src={Bpoint} alt="Card image cap" />
+                            </Col>
+                            <Col xs="4">
+                                <CardImg src={Ppoint} alt="Card image cap" />
+                            </Col>
+                            <Col xs="4">
+                                <CardImg src={Tpoint} alt="Card image cap" />
+                            </Col>
+                        </Row>
+                    </div>
+                    <div>
+                        <h1>
+                            result
+                        </h1>
+                    </div>
+                    <div>
+                        <Row>
+                            <Col xs="12">
                                 <CardImg src={Npoint} alt="Card image cap2" />
                             </Col>
                         </Row>
