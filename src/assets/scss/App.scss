@@ -1,11 +1,11 @@
 .page{
-  min-height: 100vh+(100vh*20/100);
+  min-height: 100vh;
   background-image: url(../img/livecasino.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  padding-bottom: 5%;
+  padding-bottom: 3rem;
   .card-title{
     // font-family: 'Helvet';
     color: white;
@@ -28,6 +28,10 @@
   }
   .body-member{
     @import "./Member.scss";
+  }
+  .body-formula{
+    height: calc(80vh - 3rem);
+    @import "./Formula.scss";
   }
   .body-contact{
     @import "./Login.scss";

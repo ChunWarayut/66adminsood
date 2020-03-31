@@ -83,7 +83,7 @@ console.log(isShow);
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#" >
+              <NavLink href="/formula" >
                 <FaCalculator className="mx-2"/>
                 Formula
               </NavLink>

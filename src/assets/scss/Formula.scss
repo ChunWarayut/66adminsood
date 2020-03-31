@@ -1,0 +1,24 @@
+.row, col{
+    height: 100%;
+}
+.list-game{
+    overflow: auto;
+    height: 100%;
+    background-color: lightblue;
+}
+.list-game::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE and Edge */
+.list-game {
+    -ms-overflow-style: none;
+}
+.list-formula{
+    overflow: auto;
+    height: 90%;
+    background-color: lightblue;
+}
+.sroll-point{
+    text-align: left;
+    width: 80%;
+}

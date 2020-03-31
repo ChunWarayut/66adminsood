@@ -19,6 +19,7 @@ export default function RouterNav() {
       <Member />
     </Route>
     <Route path="/formula">
+      <Navigation/>
       <Formula />
     </Route>
     <Route path="/">
