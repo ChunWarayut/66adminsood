@@ -8,8 +8,16 @@ export const onSubmitLogin = (username, password) => FirestoreService.getUsersLo
     if (data.val()) {
         data.forEach(async e => {
             if (passwordHash.verify(password, e.val().password)) {
-                window.location.href = 'home'
-                sessionStorage.setItem('user_login_db', e.val()._key)
+                if (e.val().status === 'active') {
+                    window.location.href = 'home'
+                    sessionStorage.setItem('user_login_db', e.val()._key)
+                } else {
+                    Swal.fire(
+                        'Login false!',
+                        'username / ผุ้ใช้งานนี้ถูก Block',
+                        'warning'
+                    ).then(() => window.location.reload())
+                }
             } else {
                 Swal.fire(
                     'Login false!',
